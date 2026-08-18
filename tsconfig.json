@@ -6,7 +6,8 @@
 		"checkJs": true,
 
 		"noEmit": true,
-		"types": ["@types/node"],
+		"jsx": "react-jsx",
+		"types": ["@types/node", "vite-plus/client"],
 		"skipLibCheck": true
 	},
 	"exclude": ["./dist"]

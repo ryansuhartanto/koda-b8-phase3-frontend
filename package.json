@@ -6,19 +6,28 @@
 	"type": "module",
 	"imports": {
 		"#/*": [
-			"./src/*/index.js",
+			"./src/*.jsx",
 			"./src/*.js"
 		]
 	},
 	"scripts": {
+		"build": "vp build",
+		"dev": "vp dev",
 		"fmt": "vp fmt",
 		"lint": "vp lint",
 		"prepare": "vp config"
+	},
+	"dependencies": {
+		"react": "^19.2.8",
+		"react-dom": "^19.2.8"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^21.2.2",
 		"@kekkon-nexus/config": "^2.260818.0",
 		"@types/node": "^26.1.2",
+		"@types/react": "^19.2.18",
+		"@types/react-dom": "^19.2.4",
+		"@vitejs/plugin-react": "^6.0.5",
 		"eslint-plugin-no-relative-import-paths": "^1.6.1",
 		"oxfmt": ">=0.63.0 <1",
 		"oxlint": "^1.78.0",
@@ -28,6 +37,7 @@
 	},
 	"overrides": {
 		"oxfmt": ">=0.63.0 <1",
-		"oxlint": "^1.78.0"
+		"oxlint": "^1.78.0",
+		"vite": "npm:@voidzero-dev/vite-plus-core@^0.2.9"
 	}
 }
