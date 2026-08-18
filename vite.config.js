@@ -1,47 +1,56 @@
 import oxfmt from "@kekkon-nexus/config/oxfmt";
 import oxlint from "@kekkon-nexus/config/oxlint";
 import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite-plus";
+import { defineConfig, loadEnv } from "vite-plus";
 
-export default defineConfig({
-	fmt: {
-		...oxfmt,
-		ignorePatterns: ["aube-lock.yaml"],
-	},
-	lint: {
-		extends: [oxlint],
-		jsPlugins: [
-			{
-				name: "vite-plus",
-				specifier: "vite-plus/oxlint-plugin",
-			},
-			{
-				name: "no-relative-import-paths",
-				specifier: "eslint-plugin-no-relative-import-paths",
-			},
-		],
+export default defineConfig(({ mode }) => {
+	const env = loadEnv(mode, process.cwd(), "");
+	const port = Number.parseInt(env["WEB_PORT"] ?? env["PORT"] ?? "3002", 10);
 
-		rules: {
-			"vite-plus/prefer-vite-plus-imports": "error",
-			"no-relative-import-paths/no-relative-import-paths": [
-				"warn",
-				{ allowSameFolder: false, rootDir: `/src`, prefix: "#" },
+	return {
+		fmt: {
+			...oxfmt,
+			ignorePatterns: ["aube-lock.yaml"],
+		},
+		lint: {
+			extends: [oxlint],
+			jsPlugins: [
+				{
+					name: "vite-plus",
+					specifier: "vite-plus/oxlint-plugin",
+				},
+				{
+					name: "no-relative-import-paths",
+					specifier: "eslint-plugin-no-relative-import-paths",
+				},
 			],
+
+			rules: {
+				"vite-plus/prefer-vite-plus-imports": "error",
+				"no-relative-import-paths/no-relative-import-paths": [
+					"warn",
+					{ allowSameFolder: false, rootDir: `/src`, prefix: "#" },
+				],
+			},
+
+			options: {
+				typeAware: true,
+				typeCheck: true,
+			},
+		},
+		staged: {
+			"*": "vp check --fix --no-error-on-unmatched-pattern",
 		},
 
-		options: {
-			typeAware: true,
-			typeCheck: true,
+		plugins: [react()],
+
+		preview: {
+			port,
+			strictPort: true,
 		},
-	},
-	staged: {
-		"*": "vp check --fix --no-error-on-unmatched-pattern",
-	},
-
-	plugins: [react()],
-
-	server: {
-		port: 3002,
-		strictPort: true,
-	},
+		server: {
+			port,
+			strictPort: true,
+		},
+	};
 });
