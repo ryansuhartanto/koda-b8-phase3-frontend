@@ -5,10 +5,7 @@
 	"repository": "ryansuhartanto/koda-b8-phase3-frontend",
 	"type": "module",
 	"imports": {
-		"#/*": [
-			"./src/*.jsx",
-			"./src/*.js"
-		]
+		"#/*": "./src/*"
 	},
 	"scripts": {
 		"build": "vp build",
