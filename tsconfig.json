@@ -5,9 +5,16 @@
 		"allowJs": true,
 		"checkJs": true,
 
-		"noEmit": true,
 		"jsx": "react-jsx",
-		"types": ["@types/node", "vite-plus/client"],
+		"lib": ["dom"],
+
+		"noEmit": true,
+		"types": [
+			"@types/node",
+			"@types/react",
+			"@types/react-dom",
+			"vite-plus/client"
+		],
 		"skipLibCheck": true
 	},
 	"exclude": ["./dist"]
