@@ -1,4 +1,4 @@
-import { Outlet, useMatches } from "react-router";
+import { Outlet, ScrollRestoration, useMatches } from "react-router";
 import { cn } from "tailwind-variants";
 
 import { Footer } from "#/components/footer.jsx";
@@ -39,6 +39,8 @@ function Layout({ className, ...rest }) {
 				<div className="absolute -top-24 -left-32 size-128 rounded-full bg-accent-soft opacity-70 blur-3xl" />
 				<div className="absolute -right-24 -bottom-32 size-96 rounded-full bg-accent-soft opacity-60 blur-3xl" />
 			</div>
+
+			<ScrollRestoration />
 
 			<header>{header && <Header />}</header>
 			<main className="flex flex-col *:grow">
