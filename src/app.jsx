@@ -1,4 +1,3 @@
-import { lazy } from "react";
 import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { PersistGate } from "redux-persist/es/integration/react";
@@ -9,6 +8,21 @@ import { persistor, store } from "#/store.js";
 // oxlint-disable-next-line import/no-unassigned-import
 import "#/style.css";
 
+/**
+ * @import { LazyRouteFunction, RouteObject } from "react-router";
+ */
+
+/**
+ * @param {() => Promise<{ default: RouteObject["Component"] }>} load
+ * @returns {LazyRouteFunction<RouteObject>}
+ */
+function page(load) {
+	return async () => {
+		const { default: Component, ...rest } = await load();
+		return { ...rest, Component };
+	};
+}
+
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -16,15 +30,19 @@ const router = createBrowserRouter([
 		children: [
 			{
 				index: true,
-				Component: lazy(async () => import("#/pages/index.jsx")),
+				lazy: page(async () => import("#/pages/index.jsx")),
 			},
 			{
 				path: "/login",
-				Component: lazy(async () => import("#/pages/login.jsx")),
+				lazy: page(async () => import("#/pages/login.jsx")),
 			},
 			{
 				path: "/register",
-				Component: lazy(async () => import("#/pages/register.jsx")),
+				lazy: page(async () => import("#/pages/register.jsx")),
+			},
+			{
+				path: "*",
+				lazy: page(async () => import("#/pages/+404.jsx")),
 			},
 		],
 	},

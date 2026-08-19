@@ -34,6 +34,8 @@ function EyeIcon({ open }) {
 	);
 }
 
+export const handle = { header: false };
+
 function Page() {
 	const [visible, setVisible] = useState(false);
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);

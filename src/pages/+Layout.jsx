@@ -1,4 +1,4 @@
-import { Outlet } from "react-router";
+import { Outlet, useMatches } from "react-router";
 import { cn } from "tailwind-variants";
 
 import { Footer } from "#/components/footer.jsx";
@@ -9,7 +9,7 @@ import { Header } from "#/components/header.jsx";
  */
 
 /**
- * @typedef {ComponentProps<"div"> & { header?: boolean }} LayoutProps
+ * @typedef {ComponentProps<"div">} LayoutProps
  */
 
 /**
@@ -17,7 +17,12 @@ import { Header } from "#/components/header.jsx";
  * @param {LayoutProps} props
  * @returns
  */
-function Layout({ header = true, className, ...rest }) {
+function Layout({ className, ...rest }) {
+	const header = !useMatches().some(
+		(match) =>
+			/** @type {{ header?: boolean }} */ (match.handle)?.header === false,
+	);
+
 	return (
 		<div
 			className={cn([
