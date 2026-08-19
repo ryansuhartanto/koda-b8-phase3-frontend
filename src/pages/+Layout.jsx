@@ -2,6 +2,7 @@ import { Outlet } from "react-router";
 import { cn } from "tailwind-variants";
 
 import { Footer } from "#/components/footer.jsx";
+import { Header } from "#/components/header.jsx";
 
 /**
  * @import { ComponentProps } from "react";
@@ -34,8 +35,8 @@ function Layout({ header = true, className, ...rest }) {
 				<div className="absolute -right-24 -bottom-32 size-96 rounded-full bg-accent-soft opacity-60 blur-3xl" />
 			</div>
 
-			<header>{header && <></>}</header>
-			<main>
+			<header>{header && <Header />}</header>
+			<main className="flex flex-col *:grow">
 				<Outlet />
 			</main>
 			<footer>
