@@ -34,7 +34,18 @@ const rawBaseQuery = fetchBaseQuery({
 const baseQuery = async (args, api, extraOptions) => {
 	const res = await rawBaseQuery(args, api, extraOptions);
 	if (res.error) {
-		return res;
+		if ("error" in res.error) {
+			return res;
+		}
+		const body = /** @type {Partial<ApiEnvelope>} */ (res.error.data);
+		return {
+			error: {
+				status: "CUSTOM_ERROR",
+				data: res.error.data,
+				error: body?.message ?? `Request failed (${res.error.status})`,
+			},
+			meta: res.meta,
+		};
 	}
 
 	const { data, meta } = res;

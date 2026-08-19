@@ -4,6 +4,7 @@ import IconVisibilityOff from "@iconify-react/material-symbols/visibility-off-ou
 import IconVisibility from "@iconify-react/material-symbols/visibility-outline-rounded";
 import IconGoogle from "@iconify-react/simple-icons/google";
 import { useState } from "react";
+import { Navigate } from "react-router";
 
 import { Button } from "#/components/ui/button.jsx";
 import {
@@ -21,6 +22,8 @@ import {
 	FieldLabel,
 	FieldRoot,
 } from "#/components/ui/field.jsx";
+import { selectIsAuthenticated, useRegisterMutation } from "#/features/auth.js";
+import { useAppSelector } from "#/store.js";
 
 /** @param {{ open: boolean }} props */
 function EyeIcon({ open }) {
@@ -33,10 +36,26 @@ function EyeIcon({ open }) {
 
 function Page() {
 	const [visible, setVisible] = useState(false);
+	const isAuthenticated = useAppSelector(selectIsAuthenticated);
+	const [register, { isLoading, error }] = useRegisterMutation();
+
+	/** @param {{ email: string, password: string }} values */
+	function submit(values) {
+		void register({ email: values.email, password: values.password });
+	}
+
+	if (isAuthenticated) {
+		return (
+			<Navigate
+				to="/"
+				replace
+			/>
+		);
+	}
 
 	return (
 		<div className="h-full grid place-items-center">
-			<div className="flex flex-col gap-6 w-full max-w-sm [&_a]:font-medium [&_a]:text-accent [&_a]:underline-offset-4 [&_a]:hover:underline">
+			<div className="flex-col gap-6 w-full max-w-sm [&_a]:font-medium [&_a]:text-accent [&_a]:underline-offset-4 [&_a]:hover:underline">
 				<p className="text-center text-2xl font-black tracking-tight text-ink">
 					ShortLink
 				</p>
@@ -46,7 +65,13 @@ function Page() {
 						<CardDescription>Enter your details to sign up.</CardDescription>
 					</CardHeader>
 					<CardContent>
-						<Form className="flex flex-col gap-5">
+						<Form
+							className="flex flex-col gap-5"
+							errors={
+								error && "error" in error ? { email: error.error } : undefined
+							}
+							onFormSubmit={submit}
+						>
 							<FieldRoot name="email">
 								<FieldLabel>Email address</FieldLabel>
 								<FieldControl
@@ -56,6 +81,7 @@ function Page() {
 									placeholder="name@company.com"
 								/>
 								<FieldError match="valueMissing">Enter your email</FieldError>
+								<FieldError />
 							</FieldRoot>
 							<FieldRoot name="password">
 								<FieldLabel>Password</FieldLabel>
@@ -113,6 +139,7 @@ function Page() {
 								type="submit"
 								size="lg"
 								className="w-full"
+								disabled={isLoading}
 							>
 								Sign Up
 							</Button>

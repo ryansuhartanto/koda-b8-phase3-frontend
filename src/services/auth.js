@@ -11,7 +11,17 @@ import api from "#/services/index.js";
  */
 
 /**
- * @typedef {{ token: string }} Response
+ * @typedef User
+ * @property {string} id
+ * @property {string} email
+ * @property {string} createdAt
+ * @property {string} updatedAt
+ */
+
+/**
+ * @typedef Response
+ * @property {string} token
+ * @property {User} user
  */
 
 /** @type {ResultDescription<"auth", any, any, FetchBaseQueryError, FetchBaseQueryMeta | undefined>} */
