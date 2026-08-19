@@ -70,18 +70,25 @@ function Page() {
 
 				<div className="flex flex-wrap justify-center gap-3">
 					{isAuthenticated ? (
-						<Button render={<a href="/dashboard" />}>
+						<Button
+							nativeButton={false}
+							render={<a href="/dashboard" />}
+						>
 							<IconArrowBack className="size-[1.25em]" />
 							Go to Dashboard
 						</Button>
 					) : (
-						<Button render={<a href="/" />}>
+						<Button
+							nativeButton={false}
+							render={<a href="/" />}
+						>
 							<IconArrowBack className="size-[1.25em]" />
 							Go to Landing
 						</Button>
 					)}
 					<Button
 						variant="secondary"
+						nativeButton={false}
 						render={<a href="/support" />}
 					>
 						Report an Issue

@@ -62,6 +62,7 @@ function Hero() {
 				<div className="flex flex-wrap justify-center gap-3">
 					<Button
 						size="lg"
+						nativeButton={false}
 						render={<a href="/register" />}
 					>
 						Get Started
@@ -69,6 +70,7 @@ function Hero() {
 					<Button
 						variant="secondary"
 						size="lg"
+						nativeButton={false}
 						render={<a href="#features" />}
 					>
 						Learn More
