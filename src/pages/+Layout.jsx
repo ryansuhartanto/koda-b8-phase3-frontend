@@ -1,8 +1,18 @@
-import { Outlet, ScrollRestoration, useMatches } from "react-router";
+import {
+	Navigate,
+	Outlet,
+	ScrollRestoration,
+	useLocation,
+	useMatches,
+} from "react-router";
 import { cn } from "tailwind-variants";
 
 import { Footer } from "#/components/footer.jsx";
 import { Header } from "#/components/header.jsx";
+import { selectIsAuthenticated } from "#/features/auth.js";
+import { useAppSelector } from "#/store.js";
+
+const publicPaths = new Set(["/", "/login", "/register"]);
 
 /**
  * @import { ComponentProps } from "react";
@@ -22,6 +32,17 @@ function Layout({ className, ...rest }) {
 		(match) =>
 			/** @type {{ header?: boolean }} */ (match.handle)?.header === false,
 	);
+	const isAuthenticated = useAppSelector(selectIsAuthenticated);
+	const { pathname } = useLocation();
+
+	if (!isAuthenticated && !publicPaths.has(pathname)) {
+		return (
+			<Navigate
+				to="/login"
+				replace
+			/>
+		);
+	}
 
 	return (
 		<div

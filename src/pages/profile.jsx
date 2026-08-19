@@ -3,7 +3,7 @@ import IconLogout from "@iconify-react/material-symbols/logout-rounded";
 import IconNotifications from "@iconify-react/material-symbols/notifications-outline-rounded";
 import IconShield from "@iconify-react/material-symbols/shield-outline-rounded";
 import { useState } from "react";
-import { Navigate, NavLink } from "react-router";
+import { NavLink } from "react-router";
 
 import { Gravatar } from "#/components/gravatar.jsx";
 import { Badge } from "#/components/ui/badge.jsx";
@@ -11,25 +11,15 @@ import { Button } from "#/components/ui/button.jsx";
 import { Card, CardContent, CardTitle } from "#/components/ui/card.jsx";
 import { Divider, Eyebrow } from "#/components/ui/divider.jsx";
 import { Switch } from "#/components/ui/toggles.jsx";
-import { selectEmail, selectIsAuthenticated, unset } from "#/features/auth.js";
+import { selectEmail, unset } from "#/features/auth.js";
 import { useListUrlsQuery } from "#/features/urls.js";
 import { useAppDispatch, useAppSelector } from "#/store.js";
 
 function Page() {
-	const isAuthenticated = useAppSelector(selectIsAuthenticated);
 	const email = useAppSelector(selectEmail);
 	const dispatch = useAppDispatch();
 	const { data } = useListUrlsQuery({ limit: 1 });
 	const [notifications, setNotifications] = useState(true);
-
-	if (!isAuthenticated) {
-		return (
-			<Navigate
-				to="/login"
-				replace
-			/>
-		);
-	}
 
 	return (
 		<section className="px-4 py-16">
