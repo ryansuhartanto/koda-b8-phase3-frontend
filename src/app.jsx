@@ -1,15 +1,13 @@
-import { use } from "react";
-
-import { fetchApi } from "#/lib/api.js";
+import { lazy } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router";
 
 // oxlint-disable-next-line import/no-unassigned-import
 import "#/style.css";
 
-// oxlint-disable-next-line unicorn/prefer-top-level-await promise/prefer-await-to-then
-const fetchHello = fetchApi("/").then(async (res) => res.text());
+const router = createBrowserRouter([
+	{ path: "/", Component: lazy(async () => import("#/pages/index.jsx")) },
+]);
 
 export function App() {
-	const hello = use(fetchHello);
-
-	return <h1>{hello}</h1>;
+	return <RouterProvider router={router} />;
 }

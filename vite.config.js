@@ -6,7 +6,7 @@ import { defineConfig, loadEnv } from "vite-plus";
 
 export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd(), "");
-	const port = Number.parseInt(env["WEB_PORT"] ?? env["PORT"] ?? "3002", 10);
+	const port = Number(env["WEB_PORT"] ?? env["PORT"] ?? "3002");
 
 	return {
 		fmt: {
