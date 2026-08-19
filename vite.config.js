@@ -1,5 +1,6 @@
 import oxfmt from "@kekkon-nexus/config/oxfmt";
 import oxlint from "@kekkon-nexus/config/oxlint";
+import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig, loadEnv } from "vite-plus";
 
@@ -42,7 +43,7 @@ export default defineConfig(({ mode }) => {
 			"*": "vp check --fix --no-error-on-unmatched-pattern",
 		},
 
-		plugins: [react()],
+		plugins: [react(), tailwindcss()],
 
 		preview: {
 			port,
