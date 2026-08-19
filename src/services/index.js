@@ -73,7 +73,7 @@ const api = createApi({
 
 	baseQuery,
 	endpoints: () => ({}),
-	tagTypes: ["auth"],
+	tagTypes: ["auth", "urls"],
 });
 
 export default api;
