@@ -1,7 +1,7 @@
-import { Avatar } from "@base-ui/react/avatar";
-import { useEffect, useState } from "react";
+import IconAdd from "@iconify-react/material-symbols/add-rounded";
 import { NavLink } from "react-router";
 
+import { Gravatar } from "#/components/gravatar.jsx";
 import { Button } from "#/components/ui/button.jsx";
 import { selectEmail, selectIsAuthenticated, unset } from "#/features/auth.js";
 import { useAppDispatch, useAppSelector } from "#/store.js";
@@ -11,44 +11,6 @@ const links = [
 	{ to: "/analytics", label: "Analytics" },
 	{ to: "/links", label: "Links" },
 ];
-
-/**
- * @param {{ email: string }} props
- */
-function GravatarAvatar({ email }) {
-	const [hash, setHash] = useState("");
-
-	// oxlint-disable promise/prefer-await-to-then
-	useEffect(() => {
-		void crypto.subtle
-			.digest("SHA-256", new TextEncoder().encode(email))
-			.then((digest) =>
-				setHash(
-					[...new Uint8Array(digest)]
-						.map((byte) => byte.toString(16).padStart(2, "0"))
-						.join(""),
-				),
-			)
-			.catch((/** @type {unknown} */ error) => {
-				throw error;
-			});
-	}, [email]);
-	// oxlint-enable promise/prefer-await-to-then
-
-	return (
-		<Avatar.Root className="flex size-8 items-center justify-center overflow-hidden rounded-full bg-line text-xs font-medium text-ink-muted">
-			{hash && (
-				<Avatar.Image
-					src={`https://gravatar.com/avatar/${hash}?s=64&d=404`}
-					width="32"
-					height="32"
-					className="size-full object-cover"
-				/>
-			)}
-			<Avatar.Fallback>{email[0]?.toUpperCase()}</Avatar.Fallback>
-		</Avatar.Root>
-	);
-}
 
 export function Header() {
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
@@ -89,7 +51,13 @@ export function Header() {
 				<div className="ml-auto flex items-center gap-2">
 					{isAuthenticated ? (
 						<>
-							{email && <GravatarAvatar email={email} />}
+							<Button
+								size="sm"
+								render={<NavLink to="/create" />}
+							>
+								<IconAdd className="size-[1.25em]" />
+								Create New Link
+							</Button>
 							<Button
 								variant="ghost"
 								size="sm"
@@ -99,6 +67,14 @@ export function Header() {
 							>
 								Logout
 							</Button>
+
+							<NavLink
+								to="/profile"
+								aria-label="Profile"
+								className="rounded-full transition hover:opacity-80 focus-visible:focus-ring"
+							>
+								<Gravatar email={email} />
+							</NavLink>
 						</>
 					) : (
 						<>

@@ -33,11 +33,12 @@ const reducer = persistCombineReducers(
 export const store = configureStore({
 	reducer,
 	middleware: (getDefaultMiddleware) =>
+		// oxlint-disable-next-line prefer-spread
 		getDefaultMiddleware({
 			serializableCheck: {
 				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
 			},
-		}),
+		}).concat(api.middleware),
 });
 
 export const persistor = persistStore(store);

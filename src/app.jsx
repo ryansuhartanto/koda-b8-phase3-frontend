@@ -37,6 +37,18 @@ const router = createBrowserRouter([
 				lazy: page(async () => import("#/pages/login.jsx")),
 			},
 			{
+				path: "/create",
+				lazy: page(async () => import("#/pages/create.jsx")),
+			},
+			{
+				path: "/links",
+				lazy: page(async () => import("#/pages/links.jsx")),
+			},
+			{
+				path: "/profile",
+				lazy: page(async () => import("#/pages/profile.jsx")),
+			},
+			{
 				path: "/register",
 				lazy: page(async () => import("#/pages/register.jsx")),
 			},

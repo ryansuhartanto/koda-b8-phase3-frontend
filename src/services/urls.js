@@ -15,6 +15,7 @@ import api from "#/services/index.js";
 /**
  * @typedef ShortenRequest
  * @property {string} url
+ * @property {string} [custom]
  */
 
 /**
