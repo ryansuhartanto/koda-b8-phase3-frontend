@@ -22,6 +22,10 @@ const router = createBrowserRouter([
 				path: "/login",
 				Component: lazy(async () => import("#/pages/login.jsx")),
 			},
+			{
+				path: "/register",
+				Component: lazy(async () => import("#/pages/register.jsx")),
+			},
 		],
 	},
 ]);

@@ -42,8 +42,8 @@ function Page() {
 				</p>
 				<Card>
 					<CardHeader>
-						<CardTitle>Welcome back</CardTitle>
-						<CardDescription>Enter your details to sign in.</CardDescription>
+						<CardTitle>Welcome</CardTitle>
+						<CardDescription>Enter your details to sign up.</CardDescription>
 					</CardHeader>
 					<CardContent>
 						<Form className="flex flex-col gap-5">
@@ -58,18 +58,10 @@ function Page() {
 								<FieldError match="valueMissing">Enter your email</FieldError>
 							</FieldRoot>
 							<FieldRoot name="password">
-								<div className="flex items-baseline justify-between">
-									<FieldLabel>Password</FieldLabel>
-									<a
-										href="/reset"
-										className="text-xs"
-									>
-										Forgot password?
-									</a>
-								</div>
+								<FieldLabel>Password</FieldLabel>
 								<FieldControl
 									type={visible ? "text" : "password"}
-									autoComplete="current-password"
+									autoComplete="new-password"
 									required
 									placeholder="••••••••"
 									trailing={
@@ -87,12 +79,42 @@ function Page() {
 									Enter your password
 								</FieldError>
 							</FieldRoot>
+							<FieldRoot
+								name="password-confirm"
+								validate={(value, formValues) =>
+									value === formValues["password"]
+										? null
+										: "Password does not match"
+								}
+							>
+								<FieldLabel>Confirm Password</FieldLabel>
+								<FieldControl
+									type={visible ? "text" : "password"}
+									autoComplete="new-password"
+									required
+									placeholder="••••••••"
+									trailing={
+										<Toggle
+											pressed={visible}
+											onPressedChange={setVisible}
+											aria-label={visible ? "Hide password" : "Show password"}
+											className="flex size-8 items-center justify-center rounded-control text-ink-subtle transition hover:text-ink-muted focus-visible:focus-ring"
+										>
+											<EyeIcon open={visible} />
+										</Toggle>
+									}
+								/>
+								<FieldError match="valueMissing">
+									Enter your password
+								</FieldError>
+								<FieldError match="customError" />
+							</FieldRoot>
 							<Button
 								type="submit"
 								size="lg"
 								className="w-full"
 							>
-								Sign in
+								Sign Up
 							</Button>
 							<LabeledDivider>or continue with</LabeledDivider>
 							<Button
@@ -114,7 +136,7 @@ function Page() {
 				</Card>
 
 				<p className="text-center text-sm text-ink-muted">
-					Don&rsquo;t have an account? <a href="/register">Sign up</a>
+					Already have an account? <a href="/login">Sign in</a>
 				</p>
 			</div>
 		</div>
