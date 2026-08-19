@@ -19,9 +19,22 @@ import api from "#/services/index.js";
  */
 
 /**
+ * @typedef ListRequest
+ * @property {number} [page]
+ * @property {number} [limit]
+ */
+
+/**
+ * @typedef ListResponse
+ * @property {Url[]} items
+ * @property {number} total
+ */
+
+/**
  * @typedef UpdateRequest
  * @property {string} code
  * @property {string} url
+ * @property {string} [custom]
  */
 
 /** @type {ResultDescription<"urls", any, any, FetchBaseQueryError, FetchBaseQueryMeta | undefined>} */
@@ -29,16 +42,23 @@ const invalidatesTags = [{ type: "urls", id: "LIST" }];
 
 const urlsApi = api.injectEndpoints({
 	endpoints: (build) => ({
-		listUrls: /** @type {typeof build.query<Url[], void>} */ (build.query)({
-			query: () => "/urls",
-			providesTags: (result) => [
-				...(result ?? []).map(({ encoded }) => /** @type {const} */ ({
-					type: "urls",
-					id: encoded,
-				})),
-				/** @type {const} */ ({ type: "urls", id: "LIST" }),
-			],
-		}),
+		listUrls:
+			/** @type {typeof build.query<ListResponse, ListRequest | void>} */ (
+				build.query
+			)({
+				query: (params) => ({ url: "/urls", params: params ?? {} }),
+				transformResponse: (
+					/** @type {Url[]} */ items,
+					/** @type {import("#/services/index.js").ApiMeta | undefined} */ meta,
+				) => ({ items, total: meta?.total ?? items.length }),
+				providesTags: (result) => [
+					...(result?.items ?? []).map(({ encoded }) => /** @type {const} */ ({
+						type: "urls",
+						id: encoded,
+					})),
+					/** @type {const} */ ({ type: "urls", id: "LIST" }),
+				],
+			}),
 		resolveUrl: /** @type {typeof build.query<Url, string>} */ (build.query)({
 			query: (code) => `/urls/${code}`,
 			providesTags: (_result, _error, code) => [{ type: "urls", id: code }],
@@ -56,10 +76,10 @@ const urlsApi = api.injectEndpoints({
 		updateUrl: /** @type {typeof build.mutation<Url, UpdateRequest>} */ (
 			build.mutation
 		)({
-			query: ({ code, url }) => ({
+			query: ({ code, url, custom }) => ({
 				url: `/urls/${code}`,
 				method: "PATCH",
-				body: { url },
+				body: { url, custom },
 			}),
 			invalidatesTags,
 		}),

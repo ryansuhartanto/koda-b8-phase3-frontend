@@ -12,10 +12,7 @@ import api from "#/services/index.js";
 
 /**
  * @typedef User
- * @property {string} id
  * @property {string} email
- * @property {string} createdAt
- * @property {string} updatedAt
  */
 
 /**

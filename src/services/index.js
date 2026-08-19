@@ -10,6 +10,11 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
  * @property {boolean} success
  * @property {string} message
  * @property {T} result
+ * @property {number} [total]
+ */
+
+/**
+ * @typedef {FetchBaseQueryMeta & { total?: number }} ApiMeta
  */
 
 const rawBaseQuery = fetchBaseQuery({
@@ -29,7 +34,7 @@ const rawBaseQuery = fetchBaseQuery({
  * @param {string | FetchArgs} args
  * @param {BaseQueryApi} api
  * @param {{}} extraOptions
- * @returns {Promise<QueryReturnValue<T, FetchBaseQueryError, FetchBaseQueryMeta>>}
+ * @returns {Promise<QueryReturnValue<T, FetchBaseQueryError, ApiMeta>>}
  */
 const baseQuery = async (args, api, extraOptions) => {
 	const res = await rawBaseQuery(args, api, extraOptions);
@@ -64,7 +69,7 @@ const baseQuery = async (args, api, extraOptions) => {
 
 	return {
 		data: body.result,
-		meta,
+		meta: meta && { ...meta, total: body.total },
 	};
 };
 

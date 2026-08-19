@@ -54,7 +54,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "*",
-				lazy: page(async () => import("#/pages/+404.jsx")),
+				lazy: page(async () => import("#/pages/redirect.jsx")),
 			},
 		],
 	},

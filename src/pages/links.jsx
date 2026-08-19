@@ -12,11 +12,9 @@ import { Card, CardContent } from "#/components/ui/card.jsx";
 import { Eyebrow } from "#/components/ui/divider.jsx";
 import { FieldControl, FieldRoot } from "#/components/ui/field.jsx";
 import { useListUrlsQuery, useRemoveUrlMutation } from "#/features/urls.js";
+import { base, host } from "#/lib/base.js";
 
 /** @import { Url } from "#/services/urls.js" */
-
-const base = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
-const host = URL.parse(base)?.host ?? base;
 
 const PAGE_SIZE = 8;
 
@@ -71,18 +69,20 @@ function LinkRow({ entry, onRemove }) {
 }
 
 function Page() {
-	const { data: urls = [], isLoading } = useListUrlsQuery();
-	const [remove] = useRemoveUrlMutation();
 	const [query, setQuery] = useState("");
 	const [page, setPage] = useState(1);
+	const { data, isFetching } = useListUrlsQuery({ page, limit: PAGE_SIZE });
+	const [remove] = useRemoveUrlMutation();
+
+	const urls = data?.items ?? [];
+	const total = data?.total ?? 0;
+	const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+	const current = Math.min(page, pages);
 
 	const needle = query.trim().toLowerCase();
-	const matched = urls.filter(({ url, encoded }) =>
+	const shown = urls.filter(({ url, encoded }) =>
 		`${url} ${encoded}`.toLowerCase().includes(needle),
 	);
-	const pages = Math.max(1, Math.ceil(matched.length / PAGE_SIZE));
-	const current = Math.min(page, pages);
-	const shown = matched.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE);
 
 	return (
 		<section className="px-4 py-16">
@@ -98,7 +98,7 @@ function Page() {
 					</div>
 					<div className="flex flex-col items-end gap-1">
 						<Eyebrow className="text-ink-subtle">Total active</Eyebrow>
-						<p className="text-3xl font-bold text-accent">{urls.length}</p>
+						<p className="text-3xl font-bold text-accent">{total}</p>
 					</div>
 				</div>
 
@@ -107,25 +107,24 @@ function Page() {
 						type="search"
 						size="lg"
 						value={query}
-						placeholder="Search by name or URL..."
+						placeholder="Search this page by name or URL..."
 						leading={<IconSearch className="size-[1.25em]" />}
 						onChange={(event) => {
 							setQuery(event.target.value);
-							setPage(1);
 						}}
 					/>
 				</FieldRoot>
 
-				{isLoading && (
+				{isFetching && (
 					<p className="py-16 text-center text-ink-muted">Loading links...</p>
 				)}
 
-				{!isLoading &&
+				{!isFetching &&
 					(shown.length === 0 ? (
 						<div className="flex flex-col items-center gap-4 py-16 text-center">
 							<IconBarChart className="size-10 text-ink-subtle" />
 							<p className="text-ink-muted">
-								{urls.length === 0
+								{total === 0
 									? "No links yet. Create your first one."
 									: "No links match that search."}
 							</p>

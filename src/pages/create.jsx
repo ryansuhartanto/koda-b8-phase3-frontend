@@ -25,9 +25,7 @@ import {
 	FieldRoot,
 } from "#/components/ui/field.jsx";
 import { useShortenUrlMutation } from "#/features/urls.js";
-
-const base = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
-const host = URL.parse(base)?.host ?? base;
+import { base, host } from "#/lib/base.js";
 
 const perks = /** @type {const} */ ([
 	{

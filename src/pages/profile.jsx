@@ -19,7 +19,7 @@ function Page() {
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
 	const email = useAppSelector(selectEmail);
 	const dispatch = useAppDispatch();
-	const { data: urls = [] } = useListUrlsQuery();
+	const { data } = useListUrlsQuery({ limit: 1 });
 	const [notifications, setNotifications] = useState(true);
 
 	if (!isAuthenticated) {
@@ -80,7 +80,7 @@ function Page() {
 								<p className="text-eyebrow uppercase opacity-80">
 									Active assets
 								</p>
-								<p className="text-2xl font-bold">{urls.length}</p>
+								<p className="text-2xl font-bold">{data?.total ?? 0}</p>
 							</div>
 							<Button
 								variant="secondary"
