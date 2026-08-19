@@ -16,6 +16,12 @@ importers:
       '@base-ui/react':
         specifier: ^1.7.0
         version: 1.7.0(@types/react@19.2.18)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))
+      '@iconify-react/material-symbols':
+        specifier: ^1.0.31
+        version: 1.0.31(react@19.2.8)
+      '@iconify-react/simple-icons':
+        specifier: ^1.0.23
+        version: 1.0.23(react@19.2.8)
       '@reduxjs/toolkit':
         specifier: ^2.12.0
         version: 2.12.0(react@19.2.8)(react-redux@9.3.0(@types/react@19.2.18)(react@19.2.8)(redux@5.0.1))
@@ -243,6 +249,20 @@ packages:
 
   '@gitmoji/parser-opts@1.4.0':
     resolution: {integrity: sha512-zzmx/vtpdB/ijjUm7u9OzHNCXWKpSbzVEgVzOzhilMgoTBlUDyInZFUtiCTV+Wf4oCP9nxGa/kQGQFfN+XLH1g==}
+
+  '@iconify-react/material-symbols@1.0.31':
+    resolution: {integrity: sha512-kZZ0F0ayZDhGENjmEcQngoL5IwSEWbhAtCdq7n4gTvQi4Uq4qw4nISXBt7NMIIiWLdyzgD274aL2I8/RsQlqeQ==}
+
+  '@iconify-react/simple-icons@1.0.23':
+    resolution: {integrity: sha512-bk2r2s0dAEiHQ3k5bVbuN784gWIU2fLlUAZXwssbIIr/I7IVyZuD6oAf1bZXXSWb4U6X5T/ON6rqyXKoiSSJQA==}
+
+  '@iconify/css-react@1.0.2':
+    resolution: {integrity: sha512-k33FKG4jGgd8odos+1HdSwCKZOQ5F1heQxwl/zDrA53tLg5IseDPMqsmQbcCEZ6E0Zgcrmfo4ceFSBmbuEvGtw==}
+    peerDependencies:
+      react: '>=18.0.0'
+
+  '@iconify/types@2.0.0':
+    resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -2087,6 +2107,21 @@ snapshots:
   '@gitmoji/parser-opts@1.4.0':
     dependencies:
       '@gitmoji/gitmoji-regex': 1.0.0
+
+  '@iconify-react/material-symbols@1.0.31(react@19.2.8)':
+    dependencies:
+      '@iconify/css-react': 1.0.2(react@19.2.8)
+
+  '@iconify-react/simple-icons@1.0.23(react@19.2.8)':
+    dependencies:
+      '@iconify/css-react': 1.0.2(react@19.2.8)
+
+  '@iconify/css-react@1.0.2(react@19.2.8)':
+    dependencies:
+      '@iconify/types': 2.0.0
+      react: 19.2.8
+
+  '@iconify/types@2.0.0': {}
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
