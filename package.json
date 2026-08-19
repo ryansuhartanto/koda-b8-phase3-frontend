@@ -15,12 +15,14 @@
 		"prepare": "vp config"
 	},
 	"dependencies": {
+		"@base-ui/react": "^1.7.0",
 		"@reduxjs/toolkit": "^2.12.0",
 		"react": "^19.2.8",
 		"react-dom": "^19.2.8",
 		"react-redux": "^9.3.0",
 		"react-router": "^8.3.0",
-		"redux-persist": "^6.0.0"
+		"redux-persist": "^6.0.0",
+		"tailwind-variants": "^3.3.1"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^21.2.2",
