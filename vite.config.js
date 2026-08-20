@@ -11,7 +11,6 @@ export default defineConfig(({ mode }) => {
 	return {
 		fmt: {
 			...oxfmt,
-			ignorePatterns: ["aube-lock.yaml"],
 		},
 		lint: {
 			extends: [oxlint],
