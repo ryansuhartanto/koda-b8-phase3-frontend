@@ -18,6 +18,19 @@ import { base, host } from "#/lib/base.js";
 
 const PAGE_SIZE = 8;
 
+/** @param {string} value */
+function unprefixed(value) {
+	const trimmed = value.trim();
+
+	for (const prefix of [`${base}/`, `${host}/`]) {
+		if (trimmed.startsWith(prefix)) {
+			return trimmed.slice(prefix.length);
+		}
+	}
+
+	return trimmed;
+}
+
 const dates = new Intl.DateTimeFormat(undefined, {
 	month: "short",
 	day: "numeric",
@@ -71,18 +84,17 @@ function LinkRow({ entry, onRemove }) {
 function Page() {
 	const [query, setQuery] = useState("");
 	const [page, setPage] = useState(1);
-	const { data, isFetching } = useListUrlsQuery({ page, limit: PAGE_SIZE });
+	const { data, isFetching } = useListUrlsQuery({
+		page,
+		limit: PAGE_SIZE,
+		q: unprefixed(query) || undefined,
+	});
 	const [remove] = useRemoveUrlMutation();
 
-	const urls = data?.items ?? [];
+	const shown = data?.items ?? [];
 	const total = data?.total ?? 0;
 	const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 	const current = Math.min(page, pages);
-
-	const needle = query.trim().toLowerCase();
-	const shown = urls.filter(({ url, encoded }) =>
-		`${url} ${encoded}`.toLowerCase().includes(needle),
-	);
 
 	return (
 		<section className="px-4 py-16">
@@ -107,10 +119,11 @@ function Page() {
 						type="search"
 						size="lg"
 						value={query}
-						placeholder="Search this page by name or URL..."
+						placeholder="Search by name or URL..."
 						leading={<IconSearch className="size-[1.25em]" />}
 						onChange={(event) => {
 							setQuery(event.target.value);
+							setPage(1);
 						}}
 					/>
 				</FieldRoot>

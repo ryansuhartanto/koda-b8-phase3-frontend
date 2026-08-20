@@ -22,6 +22,7 @@ import api from "#/services/index.js";
  * @typedef ListRequest
  * @property {number} [page]
  * @property {number} [limit]
+ * @property {string} [q]
  */
 
 /**

@@ -7,8 +7,8 @@ import { selectEmail, selectIsAuthenticated, unset } from "#/features/auth.js";
 import { useAppDispatch, useAppSelector } from "#/store.js";
 
 const links = [
-	{ to: "/dashboard", label: "Dashboard" },
-	{ to: "/analytics", label: "Analytics" },
+	// { to: "/dashboard", label: "Dashboard" },
+	// { to: "/analytics", label: "Analytics" },
 	{ to: "/links", label: "Links" },
 ];
 
