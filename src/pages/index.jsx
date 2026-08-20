@@ -5,6 +5,7 @@ import IconEditNote from "@iconify-react/material-symbols/edit-note-rounded";
 import IconGroup from "@iconify-react/material-symbols/group-rounded";
 import IconLink from "@iconify-react/material-symbols/link-rounded";
 
+import { ShortenedPopup } from "#/components/shortened.jsx";
 import { Button } from "#/components/ui/button.jsx";
 import {
 	AccentRule,
@@ -17,6 +18,8 @@ import {
 } from "#/components/ui/card.jsx";
 import { Eyebrow } from "#/components/ui/divider.jsx";
 import { FieldControl, FieldRoot } from "#/components/ui/field.jsx";
+import { useShortenUrlMutation } from "#/features/urls.js";
+import { base } from "#/lib/base.js";
 
 const features = /** @type {const} */ ([
 	{
@@ -49,6 +52,19 @@ const insights = [
 ];
 
 function Hero() {
+	const [shorten, { data, isLoading, reset, error }] = useShortenUrlMutation();
+	const shortened = data && `${base}/${data.encoded}`;
+
+	/** @param {{ url: string }} values */
+	function submit({ url }) {
+		void shorten({ url });
+	}
+
+	const errors =
+		error && "data" in error
+			? /** @type {{ result?: Record<string, string> }} */ (error.data)?.result
+			: undefined;
+
 	return (
 		<section className="h-dvh grid place-items-center p-4 text-center">
 			<div className="mx-auto flex max-w-2xl flex-col items-center gap-6">
@@ -81,7 +97,11 @@ function Hero() {
 					className="mt-6 w-full"
 				>
 					<CardContent className="p-3">
-						<Form className="flex flex-col gap-3 sm:flex-row">
+						<Form
+							className="flex flex-col gap-3 sm:flex-row"
+							errors={errors}
+							onFormSubmit={submit}
+						>
 							<FieldRoot
 								name="url"
 								className="flex-1"
@@ -98,12 +118,18 @@ function Hero() {
 							<Button
 								type="submit"
 								size="lg"
+								disabled={isLoading}
 							>
 								Shorten
 							</Button>
 						</Form>
 					</CardContent>
 				</Card>
+
+				<ShortenedPopup
+					link={shortened}
+					onClose={reset}
+				/>
 			</div>
 		</section>
 	);
