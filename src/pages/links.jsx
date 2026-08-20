@@ -4,9 +4,11 @@ import IconChevronRight from "@iconify-react/material-symbols/chevron-right-roun
 import IconCopy from "@iconify-react/material-symbols/content-copy-outline-rounded";
 import IconDelete from "@iconify-react/material-symbols/delete-outline-rounded";
 import IconLink from "@iconify-react/material-symbols/link-rounded";
+import IconQrCode from "@iconify-react/material-symbols/qr-code-rounded";
 import IconSearch from "@iconify-react/material-symbols/search-rounded";
 import { useState } from "react";
 
+import { ShortenedPopup } from "#/components/shortened.jsx";
 import { Button } from "#/components/ui/button.jsx";
 import { Card, CardContent } from "#/components/ui/card.jsx";
 import { Eyebrow } from "#/components/ui/divider.jsx";
@@ -37,8 +39,8 @@ const dates = new Intl.DateTimeFormat(undefined, {
 	year: "numeric",
 });
 
-/** @param {{ entry: Url, onRemove: (code: string) => void }} props */
-function LinkRow({ entry, onRemove }) {
+/** @param {{ entry: Url, onRemove: (code: string) => void, onQr: (link: string) => void }} props */
+function LinkRow({ entry, onRemove, onQr }) {
 	return (
 		<Card>
 			<CardContent className="flex items-center gap-2 p-4 sm:gap-4 sm:p-6">
@@ -57,6 +59,16 @@ function LinkRow({ entry, onRemove }) {
 						{dates.format(new Date(entry.createdAt))}
 					</Eyebrow>
 				</div>
+				<Button
+					variant="ghost"
+					shape="icon"
+					aria-label="Show QR code"
+					onClick={() => {
+						onQr(`${base}/${entry.encoded}`);
+					}}
+				>
+					<IconQrCode className="size-[1.25em]" />
+				</Button>
 				<Button
 					variant="ghost"
 					shape="icon"
@@ -86,6 +98,7 @@ function LinkRow({ entry, onRemove }) {
 function Page() {
 	const [query, setQuery] = useState("");
 	const [page, setPage] = useState(1);
+	const [qr, setQr] = useState("");
 	const { data, isFetching } = useListUrlsQuery({
 		page,
 		limit: PAGE_SIZE,
@@ -150,6 +163,7 @@ function Page() {
 								<li key={entry.encoded}>
 									<LinkRow
 										entry={entry}
+										onQr={setQr}
 										onRemove={(code) => {
 											void remove(code);
 										}}
@@ -158,6 +172,13 @@ function Page() {
 							))}
 						</ul>
 					))}
+
+				<ShortenedPopup
+					link={qr || undefined}
+					onClose={() => {
+						setQr("");
+					}}
+				/>
 
 				<div className="grid grid-cols-[1fr_auto_1fr] items-center">
 					<Button
