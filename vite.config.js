@@ -44,6 +44,7 @@ export default defineConfig(({ mode }) => {
 
 		plugins: [react(), tailwindcss()],
 
+		appType: "spa",
 		preview: {
 			port,
 			strictPort: true,
