@@ -61,7 +61,7 @@ function Page() {
 			: undefined;
 
 	return (
-		<section className="px-4 py-16">
+		<section className="px-4 py-12 sm:py-16">
 			<div className="mx-auto flex max-w-2xl flex-col gap-8">
 				<div className="flex flex-col gap-3">
 					<Button
@@ -82,7 +82,7 @@ function Page() {
 				</div>
 
 				<Card>
-					<CardContent className="p-8">
+					<CardContent className="p-6 sm:p-8">
 						<Form
 							className="flex flex-col gap-6"
 							errors={errors}
@@ -144,7 +144,7 @@ function Page() {
 								</p>
 							</div>
 
-							<div className="flex items-center gap-3">
+							<div className="flex flex-wrap items-center gap-3">
 								<Button
 									type="submit"
 									size="lg"

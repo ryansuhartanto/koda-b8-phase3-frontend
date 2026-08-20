@@ -7,11 +7,11 @@ import { tv } from "#/lib/tv.js";
 const card = tv({
 	slots: {
 		root: "rounded-card border border-line bg-surface",
-		header: "flex flex-col gap-1 p-8",
+		header: "flex flex-col gap-1 p-6 sm:p-8",
 		title: "text-2xl font-semibold tracking-tight text-ink",
 		description: "text-sm text-ink-muted",
-		content: "p-8 pt-0",
-		footer: "flex items-center gap-3 p-8 pt-0",
+		content: "p-6 pt-0 sm:p-8 sm:pt-0",
+		footer: "flex items-center gap-3 p-6 pt-0 sm:p-8 sm:pt-0",
 	},
 	variants: {
 		elevation: {

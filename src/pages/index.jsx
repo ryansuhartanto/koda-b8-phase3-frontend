@@ -66,9 +66,9 @@ function Hero() {
 			: undefined;
 
 	return (
-		<section className="h-dvh grid place-items-center p-4 text-center">
+		<section className="min-h-dvh grid place-items-center px-4 py-16 text-center">
 			<div className="mx-auto flex max-w-2xl flex-col items-center gap-6">
-				<h1 className="text-5xl font-black tracking-tight text-balance text-ink sm:text-6xl">
+				<h1 className="text-4xl font-black tracking-tight text-balance text-ink sm:text-5xl md:text-6xl">
 					Shorten URLs. <span className="text-accent">Share easily.</span>
 				</h1>
 				<p className="max-w-xl text-lg text-pretty text-ink-muted">
@@ -96,7 +96,7 @@ function Hero() {
 					elevation="raised"
 					className="mt-6 w-full"
 				>
-					<CardContent className="p-3">
+					<CardContent className="p-3!">
 						<Form
 							className="flex flex-col gap-3 sm:flex-row"
 							errors={errors}
@@ -139,7 +139,7 @@ function Features() {
 	return (
 		<section
 			id="features"
-			className="bg-surface px-4 py-24"
+			className="bg-surface px-4 py-16 sm:py-24"
 		>
 			<div className="mx-auto flex max-w-5xl flex-col gap-12">
 				<div className="flex flex-col gap-2">
@@ -148,7 +148,7 @@ function Features() {
 						Everything a short link should do
 					</h2>
 				</div>
-				<ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+				<ul className="grid gap-6 lg:grid-cols-3">
 					{features.map(({ icon: Icon, tone, title, description }) => (
 						<li key={title}>
 							<Card
@@ -174,20 +174,35 @@ function Features() {
 	);
 }
 
+const bars = [40, 65, 35, 80, 55, 95, 70, 45, 85, 60, 30, 75];
+
+/** @param {number} index */
+function barAt(index) {
+	if (index >= 8) {
+		return "max-md:hidden min-lg:hidden";
+	}
+
+	if (index >= 6) {
+		return "max-sm:hidden";
+	}
+
+	return "";
+}
+
 function Insights() {
 	return (
-		<section className="px-4 py-24">
+		<section className="px-4 py-16 sm:py-24">
 			<div className="mx-auto grid max-w-5xl items-center gap-12 lg:grid-cols-2">
 				<Card
 					elevation="raised"
 					className="overflow-hidden"
 				>
-					<CardContent className="flex h-96 items-end gap-3 p-8 *:rounded-t-control *:bg-linear-to-t *:from-accent-soft *:to-accent">
-						{[40, 65, 35, 80, 55, 95, 70].map((height) => (
+					<CardContent className="flex h-64 items-end gap-3 p-4 sm:h-96 sm:p-8 lg:gap-2 *:rounded-t-control *:bg-linear-to-t *:from-accent-soft *:to-accent">
+						{bars.map((height, index) => (
 							<div
 								key={height}
 								style={{ height: `${height}%` }}
-								className="flex-1"
+								className={`flex-1 ${barAt(index)}`}
 								aria-hidden
 							/>
 						))}

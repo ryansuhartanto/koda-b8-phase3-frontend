@@ -43,7 +43,7 @@ function Page() {
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
 	return (
-		<section className="grid place-items-center px-4 py-24 text-center">
+		<section className="grid place-items-center px-4 py-16 text-center sm:py-24">
 			<div className="mx-auto flex max-w-2xl flex-col items-center gap-6">
 				<div className="relative">
 					<IconTile
@@ -95,14 +95,14 @@ function Page() {
 					</Button>
 				</div>
 
-				<ul className="mt-6 grid w-full gap-6 sm:grid-cols-3">
+				<ul className="mt-6 grid w-full gap-6 lg:grid-cols-3">
 					{shortcuts.map(({ icon: Icon, href, title, description }) => (
 						<li key={title}>
 							<Card
 								interactive
 								className="h-full"
 							>
-								<CardHeader className="gap-3 p-6 text-left">
+								<CardHeader className="gap-3 p-6! text-left">
 									<Icon className="size-6 text-accent" />
 									<CardTitle className="text-base">
 										<a href={href}>{title}</a>

@@ -56,7 +56,7 @@ function Page() {
 	}
 
 	return (
-		<div className="grid place-items-center">
+		<div className="grid place-items-center p-4">
 			<div className="flex flex-col gap-6 w-full max-w-sm [&_a]:font-medium [&_a]:text-accent [&_a]:underline-offset-4 [&_a]:hover:underline">
 				<p className="text-center text-2xl font-black tracking-tight text-ink">
 					ShortLink

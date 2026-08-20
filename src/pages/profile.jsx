@@ -22,12 +22,12 @@ function Page() {
 	const [notifications, setNotifications] = useState(true);
 
 	return (
-		<section className="px-4 py-16">
+		<section className="px-4 py-12 sm:py-16">
 			<div className="mx-auto flex max-w-2xl flex-col gap-4">
 				<Eyebrow className="text-ink-subtle">Account management</Eyebrow>
 
 				<Card>
-					<CardContent className="flex flex-col gap-8 p-8">
+					<CardContent className="flex flex-col gap-6 p-6 sm:gap-8 sm:p-8">
 						<div className="flex items-center justify-between">
 							<CardTitle>Profile</CardTitle>
 							<Badge tone="accent">Pro member</Badge>
@@ -62,7 +62,7 @@ function Page() {
 							</div>
 						</dl>
 
-						<div className="flex items-center gap-4 rounded-card bg-linear-to-br from-accent-deep to-accent p-5 text-white shadow-accent">
+						<div className="flex flex-wrap items-center gap-4 rounded-card bg-linear-to-br from-accent-deep to-accent p-5 text-white shadow-accent">
 							<span className="grid size-11 shrink-0 place-items-center rounded-tile bg-white/15">
 								<IconLink className="size-[1.25em]" />
 							</span>

@@ -41,14 +41,16 @@ const dates = new Intl.DateTimeFormat(undefined, {
 function LinkRow({ entry, onRemove }) {
 	return (
 		<Card>
-			<CardContent className="flex items-center gap-4 p-6">
+			<CardContent className="flex items-center gap-2 p-4 sm:gap-4 sm:p-6">
 				<div className="flex min-w-0 flex-1 flex-col gap-1">
 					<a
 						href={`${base}/${entry.encoded}`}
-						className="flex items-center gap-2 font-semibold text-accent underline-offset-4 hover:underline"
+						className="flex min-w-0 items-center gap-2 font-semibold text-accent underline-offset-4 hover:underline"
 					>
-						<IconLink className="size-[1.25em]" />
-						{host}/{entry.encoded}
+						<IconLink className="size-[1.25em] shrink-0" />
+						<span className="truncate">
+							{host}/{entry.encoded}
+						</span>
 					</a>
 					<p className="truncate text-sm text-ink-muted">{entry.url}</p>
 					<Eyebrow className="text-ink-subtle">
@@ -97,9 +99,9 @@ function Page() {
 	const current = Math.min(page, pages);
 
 	return (
-		<section className="px-4 py-16">
+		<section className="px-4 py-12 sm:py-16">
 			<div className="mx-auto flex max-w-3xl flex-col gap-8">
-				<div className="flex items-start justify-between gap-4">
+				<div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
 					<div className="flex flex-col gap-2">
 						<h1 className="text-3xl font-bold tracking-tight text-ink">
 							My Links
@@ -108,7 +110,7 @@ function Page() {
 							Manage and track your shortened digital assets.
 						</p>
 					</div>
-					<div className="flex flex-col items-end gap-1">
+					<div className="flex flex-col gap-1 sm:items-end">
 						<Eyebrow className="text-ink-subtle">Total active</Eyebrow>
 						<p className="text-3xl font-bold text-accent">{total}</p>
 					</div>

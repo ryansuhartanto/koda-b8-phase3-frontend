@@ -29,7 +29,7 @@ const button = tv({
 		{ shape: "text", size: "sm", class: "h-9 gap-1.5 px-3.5 text-sm" },
 		{ shape: "text", size: "md", class: "h-11 gap-2 px-5 text-sm" },
 		{ shape: "text", size: "lg", class: "h-12 gap-2 px-6 text-base" },
-		{ shape: "icon", size: "sm", class: "size-9" },
+		{ shape: "icon", size: "sm", class: "size-11 sm:size-9" },
 		{ shape: "icon", size: "md", class: "size-11" },
 		{ shape: "icon", size: "lg", class: "size-12" },
 	],

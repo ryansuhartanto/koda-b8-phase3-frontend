@@ -10,12 +10,12 @@ const popup = tv({
 			"fixed inset-0 z-50 bg-ink/30 backdrop-blur-sm transition-opacity data-ending-style:opacity-0 data-starting-style:opacity-0",
 		root: [
 			"fixed top-1/2 left-1/2 z-50 w-[calc(100vw-2rem)] max-w-md -translate-1/2",
-			"flex flex-col gap-4 rounded-card border border-line bg-surface p-8 shadow-raised",
+			"flex flex-col gap-4 rounded-card border border-line bg-surface p-6 shadow-raised sm:p-8",
 			"transition data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0",
 		],
 		title: "text-xl font-semibold tracking-tight text-ink",
 		description: "text-sm text-ink-muted",
-		footer: "flex items-center gap-3",
+		footer: "flex flex-wrap items-center gap-3",
 	},
 });
 
