@@ -6,8 +6,9 @@ import IconBolt from "@iconify-react/material-symbols/bolt-rounded";
 import IconLink from "@iconify-react/material-symbols/link-rounded";
 import IconVisibility from "@iconify-react/material-symbols/visibility-outline-rounded";
 import { useState } from "react";
-import { NavLink, Navigate } from "react-router";
+import { NavLink } from "react-router";
 
+import { ShortenedPopup } from "#/components/shortened.jsx";
 import { Button } from "#/components/ui/button.jsx";
 import {
 	Card,
@@ -46,27 +47,18 @@ const perks = /** @type {const} */ ([
 
 function Page() {
 	const [slug, setSlug] = useState("");
-	const [shorten, { isLoading, isSuccess, error }] = useShortenUrlMutation();
+	const [shorten, { data, isLoading, reset, error }] = useShortenUrlMutation();
+	const shortened = data && `${base}/${data.encoded}`;
 
 	/** @param {{ url: string, custom: string }} values */
 	function submit({ url, custom }) {
 		void shorten({ url, custom: custom || undefined });
 	}
 
-	// The API reports per-field problems under `result`, keyed by field name.
 	const errors =
 		error && "data" in error
 			? /** @type {{ result?: Record<string, string> }} */ (error.data)?.result
 			: undefined;
-
-	if (isSuccess) {
-		return (
-			<Navigate
-				to="/links"
-				replace
-			/>
-		);
-	}
 
 	return (
 		<section className="px-4 py-16">
@@ -172,6 +164,11 @@ function Page() {
 						</Form>
 					</CardContent>
 				</Card>
+
+				<ShortenedPopup
+					link={shortened}
+					onClose={reset}
+				/>
 
 				<ul className="grid gap-6 sm:grid-cols-2">
 					{perks.map(({ icon: Icon, tone, title, description }) => (
