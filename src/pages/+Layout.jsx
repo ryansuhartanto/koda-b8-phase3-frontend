@@ -12,7 +12,7 @@ import { Header } from "#/components/header.jsx";
 import { selectIsAuthenticated } from "#/features/auth.js";
 import { useAppSelector } from "#/store.js";
 
-const publicPaths = new Set(["/", "/login", "/register"]);
+const authPaths = new Set(["/create", "/links", "/profile"]);
 
 /**
  * @import { ComponentProps } from "react";
@@ -35,7 +35,7 @@ function Layout({ className, ...rest }) {
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
 	const { pathname } = useLocation();
 
-	if (!isAuthenticated && !publicPaths.has(pathname)) {
+	if (!isAuthenticated && authPaths.has(pathname)) {
 		return (
 			<Navigate
 				to="/login"
