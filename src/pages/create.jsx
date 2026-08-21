@@ -57,7 +57,8 @@ function Page() {
 
 	const errors =
 		error && "data" in error
-			? /** @type {{ result?: Record<string, string> }} */ (error.data)?.result
+			? /** @type {{ results?: Record<string, string> }} */ (error.data)
+					?.results
 			: undefined;
 
 	return (

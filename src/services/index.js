@@ -9,7 +9,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
  * @typedef ApiEnvelope
  * @property {boolean} success
  * @property {string} message
- * @property {T} result
+ * @property {T} results
  * @property {number} [total]
  */
 
@@ -68,7 +68,7 @@ const baseQuery = async (args, api, extraOptions) => {
 	}
 
 	return {
-		data: body.result,
+		data: body.results,
 		meta: meta && { ...meta, total: body.total },
 	};
 };
